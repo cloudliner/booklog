@@ -1,5 +1,5 @@
 <h2>書籍検索</h2>
-<form>
-  <input type="text">
+<%= form_tag('/welcome/result', method: :post) do %>
+  <input type="text" name="author">
   <input type="submit">
-</form>
+<% end %>
