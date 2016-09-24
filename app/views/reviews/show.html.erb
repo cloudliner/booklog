@@ -20,5 +20,9 @@
   <%= @review.review %>
 </p>
 
+<p>
+  <img src="<%= @review.image_url %>">
+</p>
+
 <%= link_to 'Edit', edit_review_path(@review) %> |
 <%= link_to 'Back', reviews_path %>

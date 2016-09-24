@@ -11,17 +11,22 @@ class ReviewsController < ApplicationController
   # GET /reviews/1
   # GET /reviews/1.json
   def show
+    book = find(@review.isbn)
+    unless book.nil? then
+      @review.image_url = book.large_image_url
+    end
   end
 
   # GET /reviews/new
   def new
     @review = Review.new
     if params[:isbn] then
-      books = RakutenWebService::Books::Book.search(:isbn => params[:isbn])
-      book = books.first
-      @review.isbn = book.isbn
-      @review.title = book.title
-      @review.auther = book.author
+      book = find(params[:isbn])
+      unless book.nil? then
+        @review.isbn = book.isbn
+        @review.title = book.title
+        @review.auther = book.author
+      end
     end
   end
 
@@ -87,4 +92,13 @@ class ReviewsController < ApplicationController
         c.affiliate_id = ENV["AFID"]
       end
     end
+
+    # Find by isbn
+    def find(isbn)
+      books = RakutenWebService::Books::Book.search(:isbn => isbn)
+      unless books.nil? && books.empty? then
+        book = books.first
+        return book;
+      end
+    end  
 end
