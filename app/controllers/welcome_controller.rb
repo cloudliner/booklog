@@ -6,7 +6,7 @@ class WelcomeController < ApplicationController
       c.affiliate_id = ENV["AFID"]
   end
 
-      @books = RakutenWebService::Books::Book.search(:author => "夏目漱石",)
+      @books = RakutenWebService::Books::Book.search(:author => params[:author],)
       
   end
 end
