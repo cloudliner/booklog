@@ -1,5 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :set_review, only: [:show, :edit, :update, :destroy]
+  before_action :rakuten_api
 
   # GET /reviews
   # GET /reviews.json
@@ -15,6 +16,13 @@ class ReviewsController < ApplicationController
   # GET /reviews/new
   def new
     @review = Review.new
+    if params[:isbn] then
+      books = RakutenWebService::Books::Book.search(:isbn => params[:isbn])
+      book = books.first
+      @review.isbn = book.isbn
+      @review.title = book.title
+      @review.auther = book.author
+    end
   end
 
   # GET /reviews/1/edit
@@ -70,5 +78,13 @@ class ReviewsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def review_params
       params.require(:review).permit(:isbn, :title, :auther, :review)
+    end
+
+    # For Rakuten API Setting
+    def rakuten_api
+      RakutenWebService.configuration do |c|
+        c.application_id = ENV["APPID"]
+        c.affiliate_id = ENV["AFID"]
+      end
     end
 end
