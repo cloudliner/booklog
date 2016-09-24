@@ -1,15 +1,19 @@
 <!--参考: https://github.com/k2works/sinatra_rakuten_api-->
 <div class="starter-template">
-  <h1>Books written by...</h1>
+  <h1>Books written by <%=@author%></h1>
     <table class="table table-hover">
       <tr>
         <th>書籍名</th>
+        <th>著者名</th>
         <th>出版日</th>
+        <th>ISBN</th>
       </tr>
       <% @books.each do |book| %>            
       <tr>            
         <td><%= book.title %></td>
+        <td><%= book.author %></td>
         <td><%= book['salesDate'] %></td>
+        <td><%= book.isbn %></td>
       </tr>
       <% end %>                    
     </table>          
