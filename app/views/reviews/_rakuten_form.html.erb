@@ -4,11 +4,13 @@ RakutenWebService.configuration do |c|
   c.application_id = ENV["APPID"]
   c.affiliate_id = ENV["AFID"]
 end
-@books = RakutenWebService::Books::Book.search(:isbn => params[:isbn])
-@book = @books.first
-@review.isbn = @book.isbn
-@review.title = @book.title
-@review.auther = @book.author
+if params[:isbn] then
+  @books = RakutenWebService::Books::Book.search(:isbn => params[:isbn])
+  @book = @books.first
+  @review.isbn = @book.isbn
+  @review.title = @book.title
+  @review.auther = @book.author
+end
 %>
   <% if @review.errors.any? %>
     <div id="error_explanation">
