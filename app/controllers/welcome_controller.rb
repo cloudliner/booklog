@@ -7,6 +7,6 @@ class WelcomeController < ApplicationController
   end
 
       @books = RakutenWebService::Books::Book.search(:author => "夏目漱石",)
-      erb :books_result
+      
   end
 end
