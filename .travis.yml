@@ -1,0 +1,16 @@
+language: ruby
+rvm:
+- 2.2.5
+addons:
+  postgresql: "9.3"
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - cp config/database.yml.travis config/database.yml
+  - bin/rake db:migrate RAILS_ENV=test # 
+deploy:
+  provider: heroku
+  api_key:
+    secure: RCcge6JdUU19hrj9VSvljV9Fahk9pDMjT6NX3VgJKJ9hi+vHahNZn1rS+qD/QPW594/ZZCctT5Gy3jDirStyHC0R4tHRVQf7v/7LIGm3KDBuxUDmaX4smYerMV25WuD7ZvtQ2/N1XvPY5UDWx8s0grWuNuuSdrZiGqIeZrqDYyDY5oY1s42nYmSd5eTlR9k1bca5wgo5M8f6j0CJRqoG+U9bFoeqbqrKgNLRvjNBqQLuyNPmEaen3fWJqFAAaYZB5tEgLAYuIv+dIPsC0QZexIHWODQCcIa7v8fAQT0aranJhi0YLJcbG2fJxjqbcwszMNB9iFidLinAWZjnQcybJldleGrq5kVe2+OsL3N6bsFfp1+cUWn78UhR82zaNCbeVzSoXZnOUuzWEfnsMwW6QhOk3pv2N4fYXPj0g+wKwugmOboNFSEMjgWn+MlAZX8VSSK0k5kOOI+bq3mWQ/yfCdFb1jz11wOZmpylDt6RAHcEcwHEg5yCZ7/aOalTyw2EK5a7b5sKZgvB1TtTVCxxoUbMfkE8xLq6FiZUHXfIYU7lzNS4xUrVNNaidESJnD95+DA5SRDBnDTezDS567xDKhzOLyU/corufY1uiFqLiyMukNvsKYQB5d/ZvW3zuhAn9+YusZCvj6bsyCziUUgV4Hc5DJ88kqOs92gQUcH2Lms=
+  app: pure-tor-50932
+  on:
+    repo: cloudliner/booklog
